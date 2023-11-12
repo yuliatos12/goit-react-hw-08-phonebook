@@ -91,7 +91,7 @@ export const Form = () => {
                 />
                 <TextField
                     sx={{}}
-                    inputProps={{ inputMode: 'tel', pattern: '\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}' }} 
+                    inputProps={{ inputMode: 'tel', pattern: '[0-9]*' }} 
                     margin="normal"
                     fullWidth
                     label="Phone number"
