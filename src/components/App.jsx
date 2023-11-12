@@ -1,14 +1,35 @@
-import { ContactForm } from "./ContactForm/ContactForm";
-import { ContactList } from "./ContactList/ContactList";
-import { ContactSearchFilter } from "./ContactSearchFilter/ContactSearchFilter";
-import css from "./App.module.css"
+import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCurrentUserThunk } from "services/fetchAuth";
+import { PublicRoute } from "components/PublicRoute";
+import { PrivateRoute } from "components/PrivateRoute";
+import { Layout } from "components/Layout/Layout";
+import { lazy, useEffect } from "react";
 
-export const App = () => (
-  <div className={css.container}>
-<h1>Phonebook</h1>
-<ContactForm />
-<h2>My Contacts</h2>
-<ContactSearchFilter />
-<ContactList />
-</div>
-);
+const HomePage = lazy(() => import("pages/Home"));
+const SignIn = lazy(() => import("pages/LogIn"));
+const SignUp = lazy(() => import("pages/SignUp"));
+const ContactsPage = lazy(() => import("pages/Contacts"));
+
+export const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCurrentUserThunk())
+  }, [dispatch]);
+
+  return (
+    <Routes>
+      
+        <>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/register" element={<PublicRoute redirectTo="/contacts" component={<SignUp />} />} />
+            <Route path="/login" element={<PublicRoute redirectTo="/contacts" component={<SignIn />} />} />
+            <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<ContactsPage />} />} />
+            <Route path="*" element={<PrivateRoute redirectTo="/login" component={<HomePage />} />} />
+          </Route>
+        </>
+          </Routes>
+  );
+};

@@ -1,40 +1,39 @@
-import { getFilter } from "redux/contactFilterSlice";
+import { selectFilter } from "redux/contacts/contactFilterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhoneBookValue } from "redux/contactSlice";
-import { deleteContactThunk, getContactsThunk } from "services/mock-api";
-import { useEffect } from "react";
+import { selectPhoneBookValue } from "redux/contacts/contactSelectors";
+import { getContactThunk } from "services/fetchContacts";
+import { useEffect, useState } from "react";
+import * as React from 'react';
+import { Box, List, Typography } from "@mui/material";
+import { ContactItem } from "./ContactItem";
 
-
-export const ContactList = () => {
+export const ContactsList = () => {
     const dispatch = useDispatch();
+    const [load] = useState(true);
+    const contacts = useSelector(selectPhoneBookValue);
+    const filterContacts = useSelector(selectFilter);
+
+   
 
     useEffect(() => {
-        dispatch(getContactsThunk())
+        dispatch(getContactThunk())
     }, [dispatch]);
 
-
-    const phoneBook = useSelector(getPhoneBookValue);
-    const filterPhoneBook = useSelector(getFilter);
-
-    const lowerCaseFilter = filterPhoneBook.toLowerCase();
-    const availableContacts = phoneBook.filter(({ name }) =>
-        (name.toLowerCase().includes(lowerCaseFilter)));
-  
-    const deleteContact = (contactId) => {
-        dispatch(deleteContactThunk(contactId))
-    };
+    const toLowerCase = filterContacts.toLowerCase();
+    const visibleContacts = contacts.filter(({ name }) =>
+        (name.toLowerCase().includes(toLowerCase)));
     
     return (
-        <ul>
-            {availableContacts.map(({ name, number, id }) => (
-                <li key={id}>
-                    <p>{name}: {number}</p>
-                    <button type="button" onClick={() => deleteContact(id)}>Delete</button>
-                </li>))}
-        </ul>
+        <Box >
+            <Typography component="h1" variant="h5" sx={{ marginTop: '20px', color: '#011f4b', textAlign: 'center' }} >
+                Your Contacts:
+            </Typography>
+            {load}
+            <List sx={{ width: 500, margin: 'auto' }}>
+                {visibleContacts.map((contact) =>
+                    <ContactItem contact={contact} key={contact.id} />
+                )}
+            </List>
+        </Box>
     );
 };
-
-
-
-

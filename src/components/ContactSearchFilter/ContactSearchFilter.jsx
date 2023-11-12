@@ -1,27 +1,32 @@
-import { setFilter, getFilter } from "redux/contactFilterSlice";
+import * as React from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { filterSet, selectFilter } from "redux/contacts/contactFilterSlice";
+import { TextField, Box } from '@mui/material';
 
-export const ContactSearchFilter = () => {
-
+export const Filter = () => {
     const dispatch = useDispatch();
+    const filtContacts = useSelector(selectFilter);
 
-    const handleChangeFilter = (event) => {
+    const handleFilterChange = (event) => {
         const { value } = event.currentTarget;
-        dispatch(setFilter(value))
+        dispatch(filterSet(value))
     };
-
-    const contactFilter = useSelector(getFilter);
+    
     return (
-        <label>
-            Find contacts by name:
-            <input
+        <Box component="div">
+            <TextField
+                margin="normal"
+                inputProps={{ inputMode: 'text', pattern: "^[a-zA-Zа-яА-Я]+(([a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$" }} 
+                sx={{
+                    width: 324
+                }}
+                label="Find contacts by name:"
                 type="text"
                 name="filter"
-                value={contactFilter}
-                required
-                onChange={handleChangeFilter}
+                value={filtContacts}
+                title="Enter the name"
+                onChange={handleFilterChange}
             />
-        </label>
+        </Box>
     );
 };
-

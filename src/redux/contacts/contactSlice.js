@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { deleteContactThunk, getContactsThunk, postContactThunk } from 'services/mock-api';
+import { deleteContactThunk, getContactThunk, postContactThunk } from 'services/fetchContacts';
 
 const contactInitialState = {
     contacts: [],
@@ -17,7 +17,7 @@ const onRejected = (state, { payload }) => {
     state.error = payload;
 };
 
-const arr = [getContactsThunk, postContactThunk, deleteContactThunk];
+const arr = [getContactThunk, postContactThunk, deleteContactThunk];
 
 const addStatus = status =>
     arr.map((item) => item[status]);
@@ -27,7 +27,7 @@ export const phoneBookSlice = createSlice({
     initialState: contactInitialState,
     extraReducers: builder => {
         builder
-            .addCase(getContactsThunk.fulfilled, (state, { payload }) => {
+            .addCase(getContactThunk.fulfilled, (state, { payload }) => {
                 state.isLoading = false;
                 state.contacts = payload;
                 state.error = null;
@@ -46,7 +46,3 @@ export const phoneBookSlice = createSlice({
             .addMatcher(isAnyOf(...addStatus('rejected')), onRejected)
     }
 });
-
-export const getPhoneBookValue = state => state.phoneBook.contacts;
-export const getIsLoading = state => state.phoneBook.isLoading;
-export const getError = state => state.phoneBook.error;
