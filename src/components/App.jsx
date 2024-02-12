@@ -1,35 +1,34 @@
-import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getCurrentUserThunk } from "services/fetchAuth";
-import { PublicRoute } from "components/PublicRoute";
-import { PrivateRoute } from "components/PrivateRoute";
-import { Layout } from "components/Layout/Layout";
+// import { ContactForm } from "./ContactForm/ContactForm"
+// import { ContactList } from "./ContactList/ContactList";
+// import { Filter } from "./Filter/Filter";
+// import { Container } from "./App.styled";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { getError, getLoading } from "redux/selectors";
 import { lazy, useEffect } from "react";
+import { Layout } from './Layout/Layout';
+import { Routes, Route } from "react-router-dom";
 
-const HomePage = lazy(() => import("pages/Home"));
-const SignIn = lazy(() => import("pages/LogIn"));
-const SignUp = lazy(() => import("pages/SignUp"));
-const ContactsPage = lazy(() => import("pages/Contacts"));
+const SignUp = lazy(() => import('../pages/SignUp'));
 
-export const App = () => {
-  const dispatch = useDispatch();
+  export const App = () => {
+const isLoading = useSelector(getLoading);
+const error = useSelector(getError);
 
-  useEffect(() => {
-    dispatch(getCurrentUserThunk())
-  }, [dispatch]);
+return(
+  // <Container>
+  // <ContactForm/>
+  // <Filter/>
+  // {isLoading && <p>Loading...</p>}
+  // {error && <p>Error</p>}
+  // <ContactList />
+  // </Container>
+  <Routes>
 
-  return (
-    <Routes>
-      
-        <>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/register" element={<PublicRoute redirectTo="/contacts" component={<SignUp />} />} />
-            <Route path="/login" element={<PublicRoute redirectTo="/contacts" component={<SignIn />} />} />
-            <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<ContactsPage />} />} />
-            <Route path="*" element={<PrivateRoute redirectTo="/login" component={<HomePage />} />} />
-          </Route>
-        </>
-          </Routes>
-  );
-};
+  <Route path="/" element={<Layout/>}>
+  <Route path="/register" element={<SignUp/>}/>
+     
+  </Route>
+  
+   </Routes>
+)
+}

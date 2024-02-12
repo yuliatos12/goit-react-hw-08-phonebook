@@ -1,124 +1,66 @@
-import * as React from 'react';
-import { useState, useEffect } from "react";
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { useState } from "react";
+import { Form, FormInput, FormButton, FormLabel } from "./ContactForm.styled";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsContactAdd, selectPhoneBookValue } from "redux/contacts/contactSelectors";
-import { postContactThunk } from "services/fetchContacts";
-import { Button, TextField, Box, Typography } from '@mui/material';
+import { postContact } from "redux/contacts/operations";
+import { getContacts } from "redux/selectors";
+import { nanoid } from 'nanoid';
 
-export const options = {
-    width: '400px',
-    position: 'top-right',
-    timeout: 1500,
-    fontSize: '20px',
-};
-
-export const Form = () => {
+export const ContactForm = () => {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-    const [add, setAdd] = useState(false);
-
-    const dispatch = useDispatch();
-    const phoneBook = useSelector(selectPhoneBookValue);
-    const isContactAdd = useSelector(selectIsContactAdd);
-
-    useEffect(() => {
-        setAdd(false)
-    }, [phoneBook])
-
-    useEffect(() => {
-        if (isContactAdd) {
-            reset();
-        }
-    }, [isContactAdd]);
     
-    const handleContactAdd = (event) => {
-        event.preventDefault();
-        const newObj = { name, number };
+    const dispatch = useDispatch();
 
-        if (isContactNew(phoneBook, newObj) !== undefined) {
-            Notify.warning(`${newObj.name} is already in contacts`, options);
-            return;
-        };
-        setAdd(true);
-        dispatch(postContactThunk(newObj))
-        reset();
-    };
+    const contacts = useSelector(getContacts);
 
-    const isContactNew = (phoneBook, newContact) => {
-        return phoneBook.find(({ name }) =>
-            name.toLowerCase() === newContact.name.toLowerCase())
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.currentTarget;
-        switch (name) {
+    const handleChange = e => {
+        const {name, value} = e.target;
+        switch(name) {
             case 'name':
-                setName(value);
-                break;
+                setName(value); 
+                 break;
             case 'number':
-                setNumber(value);
+                setNumber(value); 
                 break;
-        
-            default:
-                break;
-        };
-    };
+
+                default:
+                    return;
+        }
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        const data = { name, number };
+        const newContact = { ...data, id: nanoid() };
+
+        const existingContact = contacts.find(contact => contact.name === name);
+
+      if (existingContact) {
+        alert(`${name} is already in contacts`);
+        return;
+      }
+
+      dispatch(postContact(newContact));
+        reset();
+
+    }
 
     const reset = () => {
         setName('');
         setNumber('');
     };
-
     return (
-        <>
-            <Typography component="h1" variant="h5">
-                Add Contact
-            </Typography>
-            <Box component="form" onSubmit={handleContactAdd} sx={{ mt: 1 }}>
-                <TextField
-                    sx={{}}
-                    inputProps={{ inputMode: 'text', pattern: "^[a-zA-Zа-яА-Я]+(([a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$" }} 
-                    margin="normal"
-                    fullWidth
-                    label="Name"
-                    type="text"
-                    name="name"
-                    value={name}
-                    title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                    required
-                    onChange={handleChange}
-                />
-                <TextField
-                    sx={{}}
-                    inputProps={{ inputMode: 'tel', pattern: '[0-9]*' }} 
-                    margin="normal"
-                    fullWidth
-                    label="Phone number"
-                    type="tel"
-                    name="number"
-                    value={number}
-                    required
-                    onChange={handleChange}
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ 
-                        mt: 3, 
-                        mb: 2, 
-                        display: 'flex', 
-                        gap: 3, 
-                        backgroundColor: '#6497b1',
-                        '&:hover': {
-                            backgroundColor: '#011f4b'
-                          } }}
-                >
-                    {add }
-                    <p>Add contact</p> 
-                </Button>
-            </Box>
-            </>
-    );
-};
+        <Form onSubmit={handleSubmit}>
+            <FormLabel>
+                Name
+                <FormInput type="text" name="name" value={name} onChange={handleChange}/>
+            </FormLabel>
+            <FormLabel>
+                Number
+                <FormInput type="tel" name="number" value={number} onChange={handleChange}/>
+            </FormLabel>
+            <FormButton type="submit">Add contact</FormButton>
+        </Form>
+    )
+}
