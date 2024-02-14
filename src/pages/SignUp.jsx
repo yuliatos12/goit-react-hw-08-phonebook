@@ -30,8 +30,15 @@ const SignUp = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(signUp({name, email, password}))
+        dispatch(signUp({name, email, password}));
+        reset();
     }
+
+    const reset = () => {
+        setEmail('');
+        setPassword('');
+        setName('');
+    };
 
 return (
     <form onSubmit={handleSubmit}>
