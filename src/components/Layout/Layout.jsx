@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { AppBar } from "components/AppBar/AppBar";
+import { Container } from "components/AppBar/AppBar.styled";
 
 
 export const Layout = () => {
@@ -11,12 +12,13 @@ export const Layout = () => {
             <AppBar/>
      
 
-        <main>
+        <Container>
+            
             <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
             </Suspense>
             
-        </main>
+        </Container>
 
     </>
 };

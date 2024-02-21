@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postContact } from "redux/contacts/operations";
 import { getContacts } from "redux/selectors";
 import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export const ContactForm = () => {
     const [name, setName] = useState('');
@@ -37,7 +38,7 @@ export const ContactForm = () => {
         const existingContact = contacts.find(contact => contact.name === name);
 
       if (existingContact) {
-        alert(`${name} is already in contacts`);
+        Notify.warning(`${name} is already in contacts`);
         return;
       }
 

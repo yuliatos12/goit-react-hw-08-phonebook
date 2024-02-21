@@ -18,8 +18,6 @@ const HomePage = lazy(() => import('../pages/HomePage'));
 const Contacts = lazy(() => import('../pages/Contacts'))
 
   export const App = () => {
-// const isLoading = useSelector(getLoading);
-// const error = useSelector(getError);
 const dispatch = useDispatch();
 
 useEffect(() => {
@@ -32,8 +30,8 @@ return(
   <Route index element={<HomePage/>}/>
   <Route path="/register" element={<PublicRoute redirectTo="/contacts" component={<SignUp />} />} />
   <Route path="/login" element={<PublicRoute redirectTo="/contacts" component={<SignIn />} />} />
-  <Route path="/contacts" element={<Contacts/>}/>
-     
+  <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<Contacts/>}/>}/>
+  <Route path="*" element={<PrivateRoute redirectTo="/login" component={<HomePage />} />} />
   </Route>
   
    </Routes>

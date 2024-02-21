@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { AuthLinkStyled, Container } from "./AppBar.styled";
 
 export const AuthNav = () => {
     return (
-<>
-            <ul>
-                <li><Link to='/register'>Sign Up</Link></li>
-                <li><Link to='/login'>Sign In</Link></li>
-                
-            </ul>
-</>
+<div style={{display: 'flex',
+gap: '15px'}}>
+            
+            <AuthLinkStyled to='/login'>Sign In</AuthLinkStyled>
+            <AuthLinkStyled to='/register'>Sign Up</AuthLinkStyled>
+            
+</div>
     );
 }

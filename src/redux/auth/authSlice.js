@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { currentUser, logOut, signIn, signUp } from './operations';
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from 'redux-persist/lib/storage' 
@@ -10,9 +10,26 @@ const initialState = {
     },
     token: null,
     isLoggedIn: false,
+    isLoading: false,
     error: null,
     currentUser: false,
 }
+
+const handlePending = (state) => {
+    state.isLoading = true;
+}
+
+const handleRejected = (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+}
+
+const arr = [signUp, signIn, logOut];
+
+const addStatus = status => {
+    return arr.map(el => el[status]);
+}
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -38,6 +55,8 @@ builder
     state.user = action.payload;
     state.isLoggedIn = true;
 })
+.addMatcher(isAnyOf(...addStatus('pending')), handlePending)
+.addMatcher(isAnyOf(...addStatus('rejected')), handleRejected)
 
     }
 })

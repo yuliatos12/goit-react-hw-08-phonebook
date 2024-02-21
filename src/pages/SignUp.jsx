@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signUp } from "redux/auth/operations";
-
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { nanoid } from 'nanoid';
+import { StyledButton, StyledForm, StyledInput } from "./Pages.styled";
 
 const SignUp = () => {
 
@@ -31,6 +33,10 @@ const SignUp = () => {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(signUp({name, email, password}));
+
+        if(name === '' || email === '' || password === '') {
+            return Notify.warning('Please fill in all the fields!');
+        }
         reset();
     }
 
@@ -39,24 +45,51 @@ const SignUp = () => {
         setPassword('');
         setName('');
     };
+const nameInputId = nanoid();
+ const emailInputId = nanoid();
+  const passInputId = nanoid();
 
 return (
-    <form onSubmit={handleSubmit}>
-        <label>
+    <StyledForm autoComplete="off" onSubmit={handleSubmit}>
+        <label tmlFor={nameInputId} style={{
+            fontWeight: '400',
+            color:'#fff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+            marginBottom: '10px',
+            display: 'block',
+            fontSize: '16px',
+          }}>
             Name:
-            <input type="text" name="name" value={name} onChange={handleChange}/>
-        </label>
-        <label>
+            </label>
+            <StyledInput id={nameInputId} type="text" name="name" value={name} onChange={handleChange}/>
+        
+        <label htmlFor={emailInputId} style={{
+            fontWeight: '400',
+            color:'#fff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+            marginBottom: '10px',
+            display: 'block',
+            fontSize: '16px',
+          }}>
             Email:
-            <input type="email" name="email" value={email} onChange={handleChange}/>
-        </label>
-        <label>
+            </label>
+            <StyledInput id={emailInputId} type="email" name="email" value={email} onChange={handleChange}/>
+        
+        <label tmlFor={passInputId} style={{
+            fontWeight: '400',
+            color:'#fff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+            marginBottom: '10px',
+            display: 'block',
+            fontSize: '16px',
+          }}>
            Password:
-            <input type="password" name="password" value={password} onChange={handleChange}/>
-        </label>
-        <button type="submit">Sign Up</button>
+           </label>
+            <StyledInput id={passInputId} type="password" name="password" value={password} onChange={handleChange}/>
+        
+        <StyledButton type="submit">Sign Up</StyledButton>
 
-    </form>
+    </StyledForm>
    
 )
 

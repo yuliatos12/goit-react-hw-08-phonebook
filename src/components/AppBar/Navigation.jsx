@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { NavigationContainer, StyledLink } from "./AppBar.styled";
+import { FaBookOpenReader } from "react-icons/fa6";
+
 export const Navigation = () => {
     return (
-<>
-<Link to="/">Home</Link>
-<Link to='/contacts'>Contacts</Link>
-</>
+<NavigationContainer>
+<FaBookOpenReader style={{
+        
+        color: "white",
+        width: "25px",
+    height: "25px",
+      }}/>
+<StyledLink to="/">Home</StyledLink>
+<StyledLink to='/contacts'>Contacts</StyledLink>
+</NavigationContainer>
     );
 }
