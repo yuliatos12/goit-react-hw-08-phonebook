@@ -2,12 +2,12 @@ import styled from 'styled-components'
 
 export const StyledForm = styled.form`
 background: rgba(242, 233, 238, 0.3);
-  padding: 3em;
+  padding: 40px;
   border-radius: 20px;
   backdrop-filter: blur(10px);
   box-shadow: 20px 20px 40px -6px rgba(0,0,0,0.2);
   display: inline-block;
-  margin-top: 100px;
+  
 `
 export const StyledInput = styled.input`
 display: block;
@@ -32,7 +32,15 @@ display: block;
         box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.2);
       }
 `
-
+export const StyledLabel = styled.label`
+            font-weight: 400;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+            display: block;
+            font-size: 16px;
+            text-align: left;
+`
 export const StyledButton = styled.button`
 background: transparent;
     padding: 1em;

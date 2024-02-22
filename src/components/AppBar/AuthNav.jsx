@@ -6,7 +6,7 @@ export const AuthNav = () => {
 <div style={{display: 'flex',
 gap: '15px'}}>
             
-            <AuthLinkStyled to='/login'>Sign In</AuthLinkStyled>
+            {/* <AuthLinkStyled to='/login'>Sign In</AuthLinkStyled> */}
             <AuthLinkStyled to='/register'>Sign Up</AuthLinkStyled>
             
 </div>

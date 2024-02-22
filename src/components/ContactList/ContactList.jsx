@@ -1,4 +1,5 @@
 import { ContactItem } from "components/ContactItem/ContactItem"
+import { StyledForm } from "pages/Pages.styled";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "redux/contacts/operations";
@@ -25,7 +26,11 @@ export const ContactList = () => {
   const filteredContacts = getFilteredContacts();
     return(
        
-        <ul>
+        <ul style={{background: 'rgba(242, 233, 238, 0.9)',
+          padding: '3em',
+          borderRadius: '20px',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '20px 20px 40px -6px rgba(0,0,0,0.2)'}}>
            {filteredContacts.map(({ id, name, number }) => (
         <ContactItem
           key={id}
@@ -35,6 +40,8 @@ export const ContactList = () => {
         ></ContactItem>
       ))}
         </ul>
+       
+       
         
     )
 }

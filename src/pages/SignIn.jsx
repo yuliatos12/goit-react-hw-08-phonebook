@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signIn } from "redux/auth/operations";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { StyledButton, StyledForm, StyledInput } from "./Pages.styled";
+import { StyledButton, StyledForm, StyledInput, StyledLabel } from "./Pages.styled";
 import { nanoid } from 'nanoid';
 const SignIn = () => {
 
@@ -44,36 +44,30 @@ const SignIn = () => {
   const passInputId = nanoid();
 
 return (
+    <div style={{textAlign: 'center', paddingTop: '50px'}}>
+    <p style={{
+            color: "lightgrey",
+            marginTop: "5px",
+            fontSize: '20px',
+          }}>Please, log in to go to your contacts</p>
     <StyledForm onSubmit={handleSubmit} >
-        <label htmlFor={emailInputId}
-        style={{
-            fontWeight: '400',
-            color:'#fff',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-            marginBottom: '10px',
-            display: 'block',
-            fontSize: '16px',
-          }}>
+        <StyledLabel htmlFor={emailInputId}
+       >
             Email:
-            </label>
+            </StyledLabel>
             <StyledInput id={emailInputId} type="email" name="email" value={email} onChange={handleChange}/>
         
-        <label htmlFor={passInputId}
-        style={{
-            fontWeight: '400',
-            color:'#fff',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-            marginBottom: '10px',
-            display: 'block',
-            fontSize: '16px',
-          }}>
+        <StyledLabel htmlFor={passInputId}
+        >
            Password:
-           </label>
+           </StyledLabel>
             <StyledInput id={passInputId} type="password" name="password" value={password} onChange={handleChange}/>
         
-        <StyledButton type="submit">Sign In</StyledButton>
+        <StyledButton type="submit">Log In</StyledButton>
 
     </StyledForm>
+    </div>
+    
    
 )
 
