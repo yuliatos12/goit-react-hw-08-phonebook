@@ -10,21 +10,22 @@ export const UserMenu = () => {
 
     const handleLogOut = () => dispatch(logOut());
     return (
-<>
-<div style={{
-            display: 'flex',
-          }}>
-    <p style={{
-            fontWeight: '400',
-            color:'#fff',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-            marginBottom: '10px',
-            display: 'block',
-            fontSize: '16px',
-            marginRight: '15px',
-          }}>Welcome, {name}</p>
-    <LogOutStyled onClick={handleLogOut}>Log Out</LogOutStyled>
-</div>
-</>
+        <>
+            <div style={{
+                display: 'flex',
+            }}>
+                <p style={{
+                    fontWeight: '400',
+                    color: '#fff',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+                    marginBottom: '10px',
+                    display: 'block',
+                    fontSize: '16px',
+                    marginRight: '15px',
+                }}>Welcome, {name}</p>
+                
+                <LogOutStyled onClick={handleLogOut}>Log Out</LogOutStyled>
+            </div>
+        </>
     );
 }

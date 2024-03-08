@@ -74,12 +74,12 @@ const SignUp = () => {
                 <StyledInput id={passInputId} type="password" name="password" value={password} onChange={handleChange} />
 
                 <StyledButton type="submit">Sign Up</StyledButton>
-<p style={{
-                color: "lightgrey",
-                marginTop: "5px",
-                marginBottom: 0,
-                fontSize: '14px',
-            }}><Link style={{color: 'white'}} to='/login'>Log in</Link> if you already have an account</p>
+                <p style={{
+                    color: "lightgrey",
+                    marginTop: "5px",
+                    marginBottom: 0,
+                    fontSize: '14px',
+                }}><Link style={{ color: 'white' }} to='/login'>Log in</Link> if you already have an account</p>
             </StyledForm>
         </div>
 
