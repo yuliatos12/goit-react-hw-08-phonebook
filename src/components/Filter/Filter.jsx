@@ -1,4 +1,3 @@
-import { StyledInput } from "pages/Pages.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "redux/filter/filterSlice";
 import { getFilter } from "redux/selectors";

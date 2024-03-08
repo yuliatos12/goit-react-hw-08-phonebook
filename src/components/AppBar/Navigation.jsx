@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { NavigationContainer, StyledLink } from "./AppBar.styled";
 import { FaBookOpenReader } from "react-icons/fa6";
 

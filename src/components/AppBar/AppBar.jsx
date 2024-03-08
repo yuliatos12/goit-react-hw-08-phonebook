@@ -3,7 +3,7 @@ import { Navigation } from "./Navigation";
 import { UserMenu } from "../UserMenu/UserMenu";
 import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "redux/auth/selectors";
-import { HeaderBar, Container, HeaderContainer } from "./AppBar.styled";
+import { HeaderBar, HeaderContainer } from "./AppBar.styled";
 
 
 export const AppBar = () => {
